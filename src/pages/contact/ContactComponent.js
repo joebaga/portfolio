@@ -26,6 +26,7 @@ class Contact extends Component {
             <div className="contact-heading-div">
               <div className="contact-heading-img-div">
                 <img
+                  id="rcorners2"
                   src={require(`../../assets/images/${ContactData["profile_image_path"]}`)}
                   alt=""
                 />
@@ -121,7 +122,7 @@ class Contact extends Component {
                 </p>
                 <div className="address-btn-div">
                   <Button
-                    text="Visit on Google Maps"
+                    text="My Location "
                     newTab={true}
                     href={addressSection.location_map_link}
                     theme={theme}

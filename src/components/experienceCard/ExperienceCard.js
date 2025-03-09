@@ -4,10 +4,14 @@ import { Fade } from "react-reveal";
 
 class ExperienceCard extends Component {
   render() {
-    const experience = this.props.experience;
+    const experience = this.props.experience || {}; // Default to empty object if null
     const index = this.props.index;
     const totalCards = this.props.totalCards;
     const theme = this.props.theme;
+
+    // Check if experience has valid content, otherwise show "NONE"
+    const isEmpty = !experience.title || experience.title === "NONE";
+
     return (
       <div
         className="experience-list-item"
@@ -15,11 +19,17 @@ class ExperienceCard extends Component {
       >
         <Fade left duration={2000} distance="40px">
           <div className="experience-card-logo-div">
-            <img
-              className="experience-card-logo"
-              src={require(`../../assets/images/${experience["logo_path"]}`)}
-              alt=""
-            />
+            {isEmpty ? (
+              <div className="placeholder-logo">NONE</div> // Placeholder if empty
+            ) : (
+              <img
+                className="experience-card-logo"
+                src={require(`../../assets/images/${
+                  experience.logo_path || "default_logo.png"
+                }`)}
+                alt="Company Logo"
+              />
+            )}
           </div>
         </Fade>
         <div className="experience-card-stepper">
@@ -66,19 +76,17 @@ class ExperienceCard extends Component {
                     className="experience-card-title"
                     style={{ color: theme.text }}
                   >
-                    {experience["title"]}
+                    {isEmpty ? "NONE" : experience.title}
                   </h3>
                   <p
                     className="experience-card-company"
                     style={{ color: theme.text }}
                   >
-                    <a
-                      href={experience["company_url"]}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {experience["company"]}
-                    </a>
+                    {isEmpty ? (
+                      "NONE"
+                    ) : (
+                      <span>{experience.company}</span> // No hyperlink
+                    )}
                   </p>
                 </div>
                 <div>
@@ -87,13 +95,13 @@ class ExperienceCard extends Component {
                       className="experience-card-duration"
                       style={{ color: theme.secondaryText }}
                     >
-                      {experience["duration"]}
+                      {isEmpty ? "NONE" : experience.duration}
                     </p>
                     <p
                       className="experience-card-location"
                       style={{ color: theme.secondaryText }}
                     >
-                      {experience["location"]}
+                      {isEmpty ? "NONE" : experience.location}
                     </p>
                   </div>
                 </div>
@@ -106,7 +114,7 @@ class ExperienceCard extends Component {
                 }}
               >
                 <div className="repo-description" />
-                {experience["description"]}
+                {isEmpty ? "NONE" : experience.description}
               </div>
             </div>
           </div>
